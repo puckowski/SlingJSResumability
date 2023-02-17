@@ -4,16 +4,11 @@ This is an example of Sling.js resumability capabilities on the client-side.
 
 ## Build
 
-At root, run:
-
-```
-node .\sling-resumable-cli.min.js src
-```
-
 In src folder, run:
 
 ```
-npm run build
+npm run buildFrontend
+npm run buildServer
 ```
 
 ## Run Server
