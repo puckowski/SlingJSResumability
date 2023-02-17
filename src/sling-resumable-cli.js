@@ -11,7 +11,6 @@ if (process.argv.length < 3) {
 }
 
 const myArgs = process.argv.slice(2);
-myArgs[0] = 'src';
 
 let serverRoot = myArgs[1];
 
@@ -291,6 +290,8 @@ function seekToFirstUnquotedSemicolon(string) {
         } else if (f.includes(filePathGit)) {
             continue;
         } else if (f.endsWith('component.js')) {
+            console.log('Found component: ' + f);
+
             const data = fs.readFileSync(f, { encoding: 'utf-8' });
             const lines = data.split(/\r?\n/);
 
@@ -461,6 +462,8 @@ function seekToFirstUnquotedSemicolon(string) {
             } else if (f.includes(filePathGit)) {
                 continue;
             } else if (f.endsWith('server.component.js')) {
+                console.log('Found server component: ' + f);
+
                 const data = fs.readFileSync(f, { encoding: 'utf-8' });
                 const lines = data.split(/\r?\n/);
 
