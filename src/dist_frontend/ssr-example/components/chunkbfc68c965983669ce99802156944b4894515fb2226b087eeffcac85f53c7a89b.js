@@ -17,6 +17,8 @@ export function boundarySayHello() {
         const state = getState();
         state.second = true;
         setState(state);
+    }export function boundaryDoubleClick() {
+        console.log('double click');
     }
 export function boundaryTestSimple() {
         console.log('simple');

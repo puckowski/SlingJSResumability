@@ -275,6 +275,62 @@ function seekToFirstUnquotedSemicolon(string) {
     return data;
 }
 
+function insertNewlinesAtCommas(dataArray) {
+    let string = '';
+    let openedDouble = false;
+    let opened = false;
+    let previousEscape = false;
+    let isImport = false;
+
+    for (let d = 0; d < dataArray.length; ++d) {
+        string = dataArray[d];
+
+        for (let i = 0; i < string.length; ++i) {
+            if (string[i] === '"' && !opened && !openedDouble) {
+                openedDouble = true;
+            } else if (string[i] === '\'' && !opened && !openedDouble) {
+                opened = true;
+            } else if (string[i] === '"' && openedDouble && !previousEscape) {
+                opened = false;
+                openedDouble = false;
+            } else if (string[i] === '\'' && opened && !previousEscape) {
+                opened = false;
+                openedDouble = false;
+            } else if (string[i] === '"' && openedDouble && previousEscape) {
+                previousEscape = false;
+            } else if (string[i] === '\'' && opened && previousEscape) {
+                previousEscape = false;
+            } else {
+                if (string[i] === '\\') {
+                    previousEscape = true;
+                } else {
+                    previousEscape = false;
+                }
+
+                if (isImport && !opened && !openedDouble && string[i] === ';') {
+                    isImport = false;
+                }
+
+                if (!opened && !openedDouble && string[i] === 'i') {
+                    if (string.substring(i, i + 6) === 'import') {
+                        isImport = true;
+                    }
+                } else if (!opened && !openedDouble && !isImport && string[i] === ',') {
+                    const after = string.substring(i + 1, string.length);
+                    string = string.substring(0, i + 1) + '\n';
+
+                    if (after.trim() !== '') {
+                        dataArray[d] = string;
+                        dataArray.splice(d + 1, 0, after);
+                    }
+                }
+            }
+        }
+    }
+
+    return dataArray;
+}
+
 ; (async () => {
     const writtenFileSet = new Set();
     const boundaryMap = new Map();
@@ -293,7 +349,9 @@ function seekToFirstUnquotedSemicolon(string) {
             console.log('Found component: ' + f);
 
             const data = fs.readFileSync(f, { encoding: 'utf-8' });
-            const lines = data.split(/\r?\n/);
+
+            let lines = data.split(/\r?\n/);
+            lines = insertNewlinesAtCommas(lines);
 
             removeCommentsFromLines(lines);
 
@@ -465,7 +523,9 @@ function seekToFirstUnquotedSemicolon(string) {
                 console.log('Found server component: ' + f);
 
                 const data = fs.readFileSync(f, { encoding: 'utf-8' });
-                const lines = data.split(/\r?\n/);
+                
+                let lines = data.split(/\r?\n/);
+                lines = insertNewlinesAtCommas(lines);
 
                 removeCommentsFromLines(lines);
 

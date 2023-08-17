@@ -14,6 +14,8 @@ export function boundaryTestSimple() {
         if (state.second) {
             console.log('has state');
         }
+    }export function boundaryDoubleClick() {
+        console.log('double click');
     }
 export function boundarySecond() {
         console.log('second');

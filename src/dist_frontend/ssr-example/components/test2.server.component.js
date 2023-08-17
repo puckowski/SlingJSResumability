@@ -14,14 +14,20 @@ class Test2Component {
 
     boundarySecond() { import(/* webpackChunkName: "chunkfd33c8bf76d7bfdda9b5b8c933f061c954f137694ec44622055d9af2bdb3e8c3" */ './chunkfd33c8bf76d7bfdda9b5b8c933f061c954f137694ec44622055d9af2bdb3e8c3.js').then(module => { module.default(); });}
 
+    boundaryDoubleClick() { import(/* webpackChunkName: "chunk8c8074f1c12c006eba884c932b543db80231d6f7177a47bf661340f934325a05" */ './chunk8c8074f1c12c006eba884c932b543db80231d6f7177a47bf661340f934325a05.js').then(module => { module.default(); });}
+
     view() {
-        return markup('div', {
+        return markup('div',
+
+ {
             attrs: {
                 id: 'divrouteroutlet',
                 slssrclass: 'Test2Component'
             },
             children: [
-                markup('button', {
+                markup('button',
+
+ {
                     attrs: {
                         style: 'color: red',
                         onclick: this.boundarySayHello.bind(this),
@@ -31,16 +37,22 @@ class Test2Component {
                         textNode('Call Hydrated Function')
                     ]
                 }),
-                ...(this.state === false ? [markup('div', {
+                ...(this.state === false ? [markup('div',
+
+ {
                     attrs: {
                         style: 'color: blue;',
                         onclick: this.boundarySecond.bind(this),
+
+ ondblclick: this.boundaryDoubleClick.bind(this),
                     },
                     children: [
                         textNode('State false.')
                     ]
                 })] : [
-                    markup('div', {
+                    markup('div',
+
+ {
                         attrs: {
                             style: 'color: green;'
                         },

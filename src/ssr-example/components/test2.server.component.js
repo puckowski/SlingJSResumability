@@ -38,6 +38,10 @@ class Test2Component {
         setState(state);
     }
 
+    boundaryDoubleClick() {
+        console.log('double click');
+    }
+
     view() {
         return markup('div', {
             attrs: {
@@ -58,7 +62,7 @@ class Test2Component {
                 ...(this.state === false ? [markup('div', {
                     attrs: {
                         style: 'color: blue;',
-                        onclick: this.boundarySecond.bind(this),
+                        onclick: this.boundarySecond.bind(this), ondblclick: this.boundaryDoubleClick.bind(this),
                     },
                     children: [
                         textNode('State false.')

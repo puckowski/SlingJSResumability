@@ -35,14 +35,22 @@ class Test2Component {
         setState(state);
     }
 
+    boundaryDoubleClick() {
+        console.log('double click');
+    }
+
     view() {
-        return markup('div', {
+        return markup('div',
+
+ {
             attrs: {
                 id: 'divrouteroutlet',
                 slssrclass: 'Test2Component'
             },
             children: [
-                markup('button', {
+                markup('button',
+
+ {
                     attrs: {
                         style: 'color: red',
                         onclick: " import('./chunk3a511f61a7f7cb2b41ad539a437c724b3720f501c123bfca29c025e6260668c8.js').then(module => { module.default(); });",
@@ -52,16 +60,22 @@ class Test2Component {
                         textNode('Call Hydrated Function')
                     ]
                 }),
-                ...(this.state === false ? [markup('div', {
+                ...(this.state === false ? [markup('div',
+
+ {
                     attrs: {
                         style: 'color: blue;',
                         onclick: " import('./chunkfd33c8bf76d7bfdda9b5b8c933f061c954f137694ec44622055d9af2bdb3e8c3.js').then(module => { module.default(); });",
+
+ ondblclick: " import('./chunk8c8074f1c12c006eba884c932b543db80231d6f7177a47bf661340f934325a05.js').then(module => { module.default(); });",
                     },
                     children: [
                         textNode('State false.')
                     ]
                 })] : [
-                    markup('div', {
+                    markup('div',
+
+ {
                         attrs: {
                             style: 'color: green;'
                         },
