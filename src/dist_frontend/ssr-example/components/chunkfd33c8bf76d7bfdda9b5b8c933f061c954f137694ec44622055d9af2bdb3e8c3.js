@@ -1,4 +1,4 @@
-import { textNode, markup, getState, setState } from 'slingjs/sling.min.es5';
+import { textNode, markup,      getState, setState }      from 'slingjs/sling.min.es5';
 export function boundaryTestSimple() {
         console.log('simple');
 

@@ -331,6 +331,100 @@ function insertNewlinesAtCommas(dataArray) {
     return dataArray;
 }
 
+function makeImportsSingleLine(dataArray) {
+    let string = '';
+    let openedDouble = false;
+    let opened = false;
+    let previousEscape = false;
+    let isImport = false;
+    let importStrArray = [];
+
+    for (let d = 0; d < dataArray.length; ++d) {
+        string = dataArray[d];
+
+        for (let i = 0; i < string.length; ++i) {
+            if (string[i] === '"' && !opened && !openedDouble) {
+                openedDouble = true;
+                if (isImport) {
+                    importStrArray[importStrArray.length - 1] = importStrArray[importStrArray.length - 1] + string[i];
+                }
+            } else if (string[i] === '\'' && !opened && !openedDouble) {
+                opened = true;
+                if (isImport) {
+                    importStrArray[importStrArray.length - 1] = importStrArray[importStrArray.length - 1] + string[i];
+                }
+            } else if (string[i] === '"' && openedDouble && !previousEscape) {
+                opened = false;
+                openedDouble = false;
+                if (isImport) {
+                    importStrArray[importStrArray.length - 1] = importStrArray[importStrArray.length - 1] + string[i];
+                }
+            } else if (string[i] === '\'' && opened && !previousEscape) {
+                opened = false;
+                openedDouble = false;
+                if (isImport) {
+                    importStrArray[importStrArray.length - 1] = importStrArray[importStrArray.length - 1] + string[i];
+                }
+            } else if (string[i] === '"' && openedDouble && previousEscape) {
+                previousEscape = false;
+            } else if (string[i] === '\'' && opened && previousEscape) {
+                previousEscape = false;
+            } else {
+                if (string[i] === '\\') {
+                    previousEscape = true;
+                } else {
+                    previousEscape = false;
+                }
+
+                if (isImport) {
+                    importStrArray[importStrArray.length - 1] = importStrArray[importStrArray.length - 1] + string[i];
+
+                    let newImport = '';
+                    for (let t = 0; t < importStrArray.length; ++t) {
+                        newImport += ' ' + importStrArray[t];
+                    }
+
+                    if (newImport.replace(/\s+/, '').startsWith('import(')) {
+                        isImport = false;
+                    }
+                }
+
+                if (isImport && !opened && !openedDouble && string[i] === ';') {
+                    isImport = false;
+
+                    let repIndex = 0;
+
+                    let newImport = '';
+                    for (let t = 0; t < importStrArray.length; ++t) {
+                        newImport += ' ' + importStrArray[t];
+                    }
+
+                    for (let dReplace = d - (importStrArray.length - 1); dReplace < d; ++dReplace) {
+                        dataArray[dReplace] = dataArray[dReplace].replace(importStrArray[repIndex], '');
+                        repIndex++;
+                    }
+
+                    dataArray[d] = dataArray[d].replace(importStrArray[repIndex], ' ' + newImport + ' ');
+                }
+
+                if (!opened && !openedDouble && string[i] === 'i') {
+                    if (string.substring(i, i + 6) === 'import') {
+                        isImport = true;
+                        importStrArray = [];
+                        importStrArray[0] = string[i];
+                    }
+                }
+            }
+        }
+
+        if (isImport && importStrArray.length > 0) {
+            importStrArray[importStrArray.length] = '';
+        }
+    }
+
+    return dataArray;
+}
+
 ; (async () => {
     const writtenFileSet = new Set();
     const boundaryMap = new Map();
@@ -352,6 +446,7 @@ function insertNewlinesAtCommas(dataArray) {
 
             let lines = data.split(/\r?\n/);
             lines = insertNewlinesAtCommas(lines);
+            lines = makeImportsSingleLine(lines);
 
             removeCommentsFromLines(lines);
 
@@ -523,9 +618,10 @@ function insertNewlinesAtCommas(dataArray) {
                 console.log('Found server component: ' + f);
 
                 const data = fs.readFileSync(f, { encoding: 'utf-8' });
-                
+
                 let lines = data.split(/\r?\n/);
                 lines = insertNewlinesAtCommas(lines);
+                lines = makeImportsSingleLine(lines);
 
                 removeCommentsFromLines(lines);
 
