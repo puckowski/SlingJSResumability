@@ -4,7 +4,7 @@ This is an example of Sling.js resumability capabilities on the client-side.
 
 ## Build
 
-In src folder, run:
+In >project_root>/src folder, run:
 
 ```
 npm run buildFrontend
@@ -21,4 +21,4 @@ npm run serve
 
 ## Serve Front-end
 
-Use your favorite web server to host files in dist/dist_frontend
+Use your favorite web server to host files in <project_root>/dist/dist_frontend
