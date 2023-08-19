@@ -20,6 +20,8 @@ export function boundaryTestSimple() {
         const state = getState();
         state.second = true;
         setState(state);
+    }export function boundarySimpleTwo() {
+        console.log('simple two');
     }
 export function boundaryDoubleClick() {
         console.log('double click');

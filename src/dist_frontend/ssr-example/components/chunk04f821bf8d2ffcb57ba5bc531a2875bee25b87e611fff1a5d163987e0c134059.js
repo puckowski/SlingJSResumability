@@ -1,4 +1,3 @@
-import { textNode, markup,      getState, setState }      from 'slingjs/sling.min.es5';
 export function boundaryTestSimple() {
         console.log('simple');
 
@@ -14,15 +13,15 @@ export function boundaryTestSimple() {
         if (state.second) {
             console.log('has state');
         }
-    }export function boundaryDoubleClick() {
-        console.log('double click');
-    }export function boundarySimpleTwo() {
-        console.log('simple two');
-    }
-export function boundarySecond() {
+    }export function boundarySecond() {
         console.log('second');
         this.boundaryTestSimple();
         const state = getState();
         state.second = true;
         setState(state);
-    } export default boundarySecond;
+    }export function boundaryDoubleClick() {
+        console.log('double click');
+    }
+export function boundarySimpleTwo() {
+        console.log('simple two');
+    } export default boundarySimpleTwo;

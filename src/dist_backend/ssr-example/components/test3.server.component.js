@@ -1,17 +1,31 @@
-import {
-    textNode,
-    markup
-} from 'slingjs/sling.min.es5'; import Test2Component from './test2.server.component';
+
+
+
+ import {     textNode,     markup } from 'slingjs/sling.min.es5';
+ import Test2Component from './test2.server.component';
+   
 
 class Test3Component {
 
+    boundarySimpleTwo() {
+        console.log('simple two');
+    }
+
     view() {
-        return markup('div', {
+        return markup('div',
+
+ {
             attrs: {
                 id: 'divroot',
+                slssrclass: 'Test3Component'
             },
             children: [
-                markup('span', {
+                markup('span',
+
+ {
+                    attrs: {
+                        onclick: " import('./chunk04f821bf8d2ffcb57ba5bc531a2875bee25b87e611fff1a5d163987e0c134059.js').then(module => { module.default(); });",
+                    },
                     children: [
                         textNode('Root text')
                     ]
@@ -24,3 +38,4 @@ class Test3Component {
 }
 
 export default Test3Component;
+

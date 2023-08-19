@@ -10,6 +10,8 @@ export function boundaryTestSimple() {
         setState(state);
     }export function boundaryDoubleClick() {
         console.log('double click');
+    }export function boundarySimpleTwo() {
+        console.log('simple two');
     }
 export function boundarySayHello() {
         console.log('hello');
