@@ -1,7 +1,10 @@
-import { textNode, markup } from 'slingjs/sling.min.es5';
-import Test2Component from './test2.server.component';
+import {
+    textNode,
+    markup
+} from 'slingjs/sling.min.es5'; import Test2Component from './test2.server.component';
 
 class Test3Component {
+
     view() {
         return markup('div', {
             attrs: {

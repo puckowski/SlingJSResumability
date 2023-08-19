@@ -404,7 +404,9 @@ function makeImportsSingleLine(dataArray) {
                         repIndex++;
                     }
 
-                    dataArray[d] = dataArray[d].replace(importStrArray[repIndex], ' ' + newImport + ' ');
+                    dataArray[d] = dataArray[d].replace(importStrArray[repIndex], ' ');
+                    dataArray.splice(d, 0, newImport);
+                    d++;
                 }
 
                 if (!opened && !openedDouble && string[i] === 'i') {
@@ -938,6 +940,7 @@ function makeImportsSingleLine(dataArray) {
 
                     importSet.forEach(importStatement => {
                         const statement = removeQuotedData(importStatement);
+
                         if (statement.includes('{') && statement.includes('}')) {
                             const idSet = new Set();
                             let id = statement.substring(statement.indexOf('{') + 1, statement.length);
@@ -1044,7 +1047,7 @@ function makeImportsSingleLine(dataArray) {
 
                             const longList = [];
                             for (let longIndex = 0; longIndex < tokenList.length; ++longIndex) {
-                                if (tokenList[longIndex].includes(key) && tokenList[longIndex] !== key) {
+                                if (tokenList[longIndex].includes(id) && tokenList[longIndex] !== id) {
                                     longList.push(tokenList[longIndex]);
                                 }
                             }

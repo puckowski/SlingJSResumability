@@ -1,6 +1,7 @@
 
 
-  import { textNode, markup,      getState, setState }      from 'slingjs/sling.min.es5'; 
+ import { textNode, markup,      getState, setState }      from 'slingjs/sling.min.es5';
+ 
 
 class Test2Component {
     constructor() {
