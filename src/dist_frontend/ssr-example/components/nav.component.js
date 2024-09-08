@@ -47,16 +47,16 @@ class NavComponent {
                                 window.Test2Component = module.default;
 
                                 this.renderRouterOutlet(resp.response);
-                                hydrate('divroot');
+                                hydrate('divrouteroutlet');
                             });
                         } else {
                             this.renderRouterOutlet(resp.response);
-                            hydrate('divroot');
+                            hydrate('divrouteroutlet');
                         }
                     });
                 } else {
                     this.renderRouterOutlet(resp.response);
-                    hydrate('divroot');
+                    hydrate('divrouteroutlet');
                 }
 
                 setState(state);

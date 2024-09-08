@@ -16,7 +16,7 @@ class Test3Component {
 
  {
             attrs: {
-                id: 'divroot',
+                id: 'divrouteroutlet',
                 slssrclass: 'Test3Component'
             },
             children: [

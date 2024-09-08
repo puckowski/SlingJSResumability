@@ -12,7 +12,7 @@ class Test3Component {
     view() {
         return markup('div', {
             attrs: {
-                id: 'divroot',
+                id: 'divrouteroutlet',
                 slssrclass: 'Test3Component'
             },
             children: [
